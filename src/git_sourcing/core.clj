@@ -2,7 +2,8 @@
   (:require [chime :refer [chime-at]]
             [clj-jgit.porcelain :as jgit]
             [clj-time.core :as t]
-            [clj-time.periodic :refer [periodic-seq]]))
+            [clj-time.periodic :refer [periodic-seq]])
+  (:import [java.io FileNotFoundException]))
 
 (defn get-repo
   "Either returns the existing repo, or clones the remote repo."
@@ -14,7 +15,6 @@
           (:repo (jgit/git-clone-full remote-repo local-repo))))))
 
 (def default-opts
-  nil
   {:period (-> 10 t/seconds)})
 
 (defn init
