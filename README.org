@@ -6,3 +6,9 @@ It contains two functions, =get-repo= and =init=.
 Either returns the local repo, performing a =git clone= from the remote repo if it doesn't exist.
 *** =init=
 Starts synchronising the remote and local repositories.
+**** Options
+It supports an option map as an optional third parameter. It currently supports one entry =:period= with a =clj-time= period as its value. This specifies how often the remote-repo should be checked for updates.
+These can be created a such, where =t= is =clj.time/core=. 
+#+BEGIN_SRC clojure
+(-> 10 t/seconds)
+#+END_SRC

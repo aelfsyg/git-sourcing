@@ -13,11 +13,18 @@
         (catch FileNotFoundException fne
           (:repo (jgit/git-clone-full remote-repo local-repo))))))
 
+(def default-opts
+  nil
+  {:period (-> 10 t/seconds)})
+
 (defn init
   "Synchronises a local and remote repository."
-  [remote-repo local-repo]
-  (let [repo (get-repo remote-repo local-repo)
-        callback (jgit/git-pull repo)]
-    (chime-at (periodic-seq (t/now) (-> 10 t/seconds))
-              callback
-              {:error-handler nil})))
+  ([remote-repo local-repo]
+   (init remote-repo local-repo {}))
+  ([remote-repo local-repo options]
+   (let [repo (get-repo remote-repo local-repo)
+         callback (fn [_] (jgit/git-pull repo))
+         {:keys [period]} (merge default-opts options)]
+     (chime-at (periodic-seq (t/now) period)
+               callback
+               {:error-handler nil}))))
