@@ -1,0 +1,8 @@
+* git-sourcing
+=git-sourcing= is a Clojure library to help you source information from a remote repository.
+** Functions
+It contains two functions, =get-repo= and =init=.
+*** =get-repo=
+Either returns the local repo, performing a =git clone= from the remote repo if it doesn't exist.
+*** =init=
+Starts synchronising the remote and local repositories.
